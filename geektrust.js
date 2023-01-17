@@ -2,6 +2,8 @@ const fs = require("fs");
 
 const filename = process.argv;
 
+// console.log(filename)
+
 let arr = filename[3].split(" ");
 
 let CENTRAL = {};
@@ -11,10 +13,6 @@ let AIRPORT_ARRAY = [];
 let BALANCE = {};
 
 let METROCARD_NUMBER = {};
-
-// let ADULT = 200;
-// let SENIOR_CITIZEN = 100;
-// let KID = 50;
 
 let CENTRAL_COLLECTION = 0;
 let AIRPORT_COLLECTION = 0;
@@ -42,22 +40,18 @@ switch (arr[0]) {
     fs.readFile(filename[2], "utf8", (err, data) => {
       if (err) throw err;
       var inputLines = data.toString().split("\n");
-      // console.log(inputLines);
 
       for (let i = 1; i < inputLines.length; i++) {
         let input = inputLines[i].split(" ");
 
         if (input[0] === "BALANCE") {
-          //BALANCE ADD
           if (BALANCE[input[1]]) {
             BALANCE[input[1]] += Number(input[2]);
           } else {
             BALANCE[input[1]] = Number(input[2]);
           }
         } else {
-      
           if (input[3] === "CENTRAL") {
-            //CENTRAL
             if (!CENTRAL[input[2]]) {
               CENTRAL[input[2]] = 1;
             } else {
@@ -65,18 +59,17 @@ switch (arr[0]) {
             }
 
             if (input[2] === "ADULT") {
-              //ADULT
               if (METROCARD_NUMBER[input[1]]) {
                 if (BALANCE[input[1] >= 100]) {
                   BALANCE[input[1]] -= 100;
-                  delete METROCARD_NUMBER[input[1]];
                 } else {
                   CENTRAL_COLLECTION += (100 - BALANCE[input[1]]) * 0.02;
-                  delete METROCARD_NUMBER[input[1]];
+
                   BALANCE[input[1]] = 0;
                 }
                 CENTRAL_COLLECTION += 100;
                 CENTRAL_DISCOUNT += 100;
+                delete METROCARD_NUMBER[input[1]];
               } else {
                 if (BALANCE[input[1]] >= 200) {
                   BALANCE[input[1]] -= 200;
@@ -88,18 +81,17 @@ switch (arr[0]) {
                 METROCARD_NUMBER_DATA(input[1]);
               }
             } else if (input[2] === "SENIOR_CITIZEN") {
-              //SENTOR
               if (METROCARD_NUMBER[input[1]]) {
                 if (BALANCE[input[1]] >= 50) {
                   BALANCE[input[1]] -= 50;
-                  delete METROCARD_NUMBER[input[1]];
                 } else {
                   CENTRAL_COLLECTION += (50 - BALANCE[input[1]]) * 0.02;
-                  delete METROCARD_NUMBER[input[1]];
+
                   BALANCE[input[1]] = 0;
                 }
                 CENTRAL_COLLECTION += 50;
                 CENTRAL_DISCOUNT += 50;
+                delete METROCARD_NUMBER[input[1]];
               } else {
                 if (BALANCE[input[1]] >= 100) {
                   BALANCE[input[1]] -= 100;
@@ -111,18 +103,17 @@ switch (arr[0]) {
                 METROCARD_NUMBER_DATA(input[1]);
               }
             } else {
-              //KID
               if (METROCARD_NUMBER[input[1]]) {
                 if (BALANCE[input[1]] >= 25) {
                   BALANCE[input[1]] -= 25;
-                  delete METROCARD_NUMBER[input[1]];
                 } else {
                   CENTRAL_COLLECTION += (25 - BALANCE[input[1]]) * 0.02;
-                  delete METROCARD_NUMBER[input[1]];
+
                   BALANCE[input[1]] = 0;
                 }
                 CENTRAL_COLLECTION += 25;
                 CENTRAL_DISCOUNT += 25;
+                delete METROCARD_NUMBER[input[1]];
               } else {
                 if (BALANCE[input[1]] >= 50) {
                   BALANCE[input[1]] -= 50;
@@ -135,7 +126,6 @@ switch (arr[0]) {
               }
             }
           } else {
-            // AIRPORT
             if (!AIRPORT[input[2]]) {
               AIRPORT[input[2]] = 1;
             } else {
@@ -143,21 +133,17 @@ switch (arr[0]) {
             }
 
             if (input[2] === "ADULT") {
-              //ADULT
-
               if (METROCARD_NUMBER[input[1]]) {
                 if (BALANCE[input[1]] >= 100) {
                   BALANCE[input[1]] -= 100;
-                  delete METROCARD_NUMBER[input[1]];
                 } else {
-                  
-
                   AIRPORT_COLLECTION += (100 - BALANCE[input[1]]) * 0.02;
-                  delete METROCARD_NUMBER[input[1]];
+
                   BALANCE[input[1]] = 0;
                 }
                 AIRPORT_COLLECTION += 100;
                 AIRPORT_DISCOUNT += 100;
+                delete METROCARD_NUMBER[input[1]];
               } else {
                 if (BALANCE[input[1]] >= 200) {
                   BALANCE[input[1]] -= 200;
@@ -169,18 +155,17 @@ switch (arr[0]) {
                 METROCARD_NUMBER_DATA(input[1]);
               }
             } else if (input[2] === "SENIOR_CITIZEN") {
-              //SENTOR
               if (METROCARD_NUMBER[input[1]]) {
                 if (BALANCE[input[i]] >= 50) {
                   BALANCE[input[1]] -= 50;
-                  delete METROCARD_NUMBER[input[1]];
                 } else {
                   AIRPORT_COLLECTION += (50 - BALANCE[input[1]]) * 0.02;
-                  delete METROCARD_NUMBER[input[1]];
+
                   BALANCE[input[1]] = 0;
                 }
                 AIRPORT_COLLECTION += 50;
                 AIRPORT_DISCOUNT += 50;
+                delete METROCARD_NUMBER[input[1]];
               } else {
                 if (BALANCE[input[1]] >= 100) {
                   BALANCE[input[1]] -= 100;
@@ -192,16 +177,14 @@ switch (arr[0]) {
                 METROCARD_NUMBER_DATA(input[1]);
               }
             } else {
-              //KID
               if (METROCARD_NUMBER[input[1]]) {
                 if (BALANCE[input[1]] >= 25) {
                   BALANCE[input[1]] -= 25;
-                  delete METROCARD_NUMBER[input[1]];
                 } else {
                   AIRPORT_COLLECTION += (25 - BALANCE[input[1]]) * 0.02;
-                  delete METROCARD_NUMBER[input[1]];
                   BALANCE[input[1]] = 0;
                 }
+                delete METROCARD_NUMBER[input[1]];
                 AIRPORT_COLLECTION += 25;
                 AIRPORT_DISCOUNT += 25;
               } else {
@@ -216,11 +199,8 @@ switch (arr[0]) {
               }
             }
           }
-
-         
         }
       }
-      
 
       for (let person in CENTRAL) {
         CENTRAL_ARRAY.push([person, CENTRAL[person]]);
@@ -228,21 +208,17 @@ switch (arr[0]) {
       for (let person in AIRPORT) {
         AIRPORT_ARRAY.push([person, AIRPORT[person]]);
       }
-      CENTRAL_ARRAY = CENTRAL_ARRAY.sort()
-      AIRPORT_ARRAY = AIRPORT_ARRAY.sort()
+      CENTRAL_ARRAY = CENTRAL_ARRAY.sort();
+      AIRPORT_ARRAY = AIRPORT_ARRAY.sort();
 
-      CENTRAL_ARRAY = CENTRAL_ARRAY.sort((a , b) =>{
-        return b[1] - a[1]
-      })
+      CENTRAL_ARRAY = CENTRAL_ARRAY.sort((a, b) => {
+        return b[1] - a[1];
+      });
 
+      AIRPORT_ARRAY = AIRPORT_ARRAY.sort((a, b) => {
+        return b[1] - a[1];
+      });
 
-      AIRPORT_ARRAY = AIRPORT_ARRAY.sort((a , b) => {
-        return b[1] - a[1]
-      })
-
-
-
-   
       console.log(
         "TOTAL_COLLECTION",
         "CENTRAL",
@@ -251,8 +227,8 @@ switch (arr[0]) {
       );
       console.log("PASSENGER_TYPE_SUMMARY");
       CENTRAL_ARRAY.forEach((person) => {
-        console.log(person[0] , person[1])
-      })
+        console.log(person[0], person[1]);
+      });
       console.log(
         "TOTAL_COLLECTION",
         "AIRPORT",
@@ -261,8 +237,8 @@ switch (arr[0]) {
       );
       console.log("PASSENGER_TYPE_SUMMARY");
       AIRPORT_ARRAY.forEach((person) => {
-        console.log(person[0] , person[1])
-      })
+        console.log(person[0], person[1]);
+      });
     });
     break;
   }
@@ -273,7 +249,6 @@ switch (arr[0]) {
 }
 
 function METROCARD_NUMBER_DATA(input) {
-  // console.log("input", input);
   if (!METROCARD_NUMBER[input]) {
     METROCARD_NUMBER[input] = 1;
   }
